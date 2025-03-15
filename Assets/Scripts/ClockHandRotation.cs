@@ -5,11 +5,13 @@ using UnityEngine.Events;
 
 public class ClockHandRotation : MonoBehaviour
 {
-    bool isMinuteHand = false;
+    public bool isMinuteHand = false;
 
     public UnityEvent OnHourFinished;
 
     public float speed = 30f;
+
+    public float rotation = 0f;
 
     // Start is called before the first frame update
     void Start()
@@ -20,11 +22,12 @@ public class ClockHandRotation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        bool wasJustAtPeak = transform.localEulerAngles.z < 180f;
-        transform.localEulerAngles -= new Vector3(0, 0, Time.deltaTime * speed * );
-        if (transform.localEulerAngles.z > 180f && wasJustAtPeak && isMinuteHand)
+        rotation += Time.deltaTime * speed * (isMinuteHand? 12: 1);
+        if (rotation > 360f && isMinuteHand)
         {
+            rotation -= 360f;
             OnHourFinished.Invoke();
         }
+        transform.localEulerAngles = new Vector3(0, 0, rotation * -1);
     }
 }
