@@ -7,7 +7,6 @@ public class GlowStar : MonoBehaviour
     public AnimationCurve sizeCurve;
     public AnimationCurve sizeWobble;
 
-    [Range(0f, 1f)]
     public float tCurve = 0f;
     public float tWobble = 0f;
 
@@ -35,17 +34,10 @@ public class GlowStar : MonoBehaviour
         } else
         {
             tCurve += Time.deltaTime;
-            tWobble += Time.deltaTime;
+            tWobble = (tWobble + Time.deltaTime) % 2f;
         }
 
         tCurve = Mathf.Clamp(tCurve, 0f, 1f);
-
-        if (tWobble > 2f && isOn)
-        {
-            tWobble -= 2f;
-        }
-
-        tWobble = Mathf.Clamp(tWobble, 0f, 2f);
 
         transform.localScale = Vector3.one * (sizeCurve.Evaluate(tCurve) + sizeWobble.Evaluate(tWobble));
 
@@ -54,13 +46,6 @@ public class GlowStar : MonoBehaviour
 
     public void ToggleOn(bool toggle)
     {
-        print(toggle);
         isOn = toggle;
-        print(isOn);
-    }
-
-    public void AttachStar(SwitchController controller)
-    {
-        controller.onToggle.AddListener(ToggleOn);
     }
 }

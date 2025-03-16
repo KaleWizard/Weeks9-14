@@ -26,7 +26,7 @@ public class GlowStarSpawner : MonoBehaviour
         if (t > timerEnd)
         {
             GlowStar newStar = Instantiate(star);
-            newStar.AttachStar(switchController);
+            switchController.onToggle.AddListener(newStar.ToggleOn);
             Destroy(gameObject);
         }
     }
