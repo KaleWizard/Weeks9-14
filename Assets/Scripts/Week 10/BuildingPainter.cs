@@ -31,10 +31,19 @@ public class BuildingPainter : MonoBehaviour
             Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector3Int gridPos = grid.WorldToCell(pos);
 
-            bool cellFull = placedGrid[gridPos.x + gridWidth / 2, gridPos.y + gridHeight / 2];
+            int myX = gridPos.x + gridWidth / 2;
+            int myY = gridPos.y + gridHeight / 2;
+
+            if (myX < 0 || myX >= gridWidth || myY < 0 || myY >= gridHeight)
+            {
+                print("Out of bounds!!!");
+                return;
+            }
+
+            bool cellFull = placedGrid[myX, myY];
             if (!cellFull)
             {
-                placedGrid[gridPos.x + gridWidth / 2, gridPos.y + gridHeight / 2] = true;
+                placedGrid[myX, myY] = true;
                 Instantiate(building, grid.CellToWorld(gridPos) + Vector3.one, Quaternion.identity);
             }
         }
