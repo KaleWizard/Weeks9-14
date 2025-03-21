@@ -11,10 +11,8 @@ public class GrilledCheeseGrower : MonoBehaviour
 
     public AnimationCurve growth;
 
-    float timer = 0f;
     float timerLength = 0.6f;
 
-    // Start is called before the first frame update
     void Start()
     {
         bottomBread.localScale = cheese.localScale = topBread.localScale = Vector3.zero;
@@ -28,15 +26,9 @@ public class GrilledCheeseGrower : MonoBehaviour
         yield return StartCoroutine(GrowPiece(topBread.transform));
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     IEnumerator GrowPiece(Transform t)
     {
-        timer = 0f;
+        float timer = 0f;
 
         while (timer < timerLength)
         {
