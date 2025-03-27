@@ -18,6 +18,8 @@ public class HeroController : MonoBehaviour
 
     public AudioSource audio;
 
+    public ParticleSystem particles;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -37,13 +39,23 @@ public class HeroController : MonoBehaviour
         {
             transform.position = new Vector2(transform.position.x, screenCorner.y);
             velocity.y = 0f;
-            animator.SetBool("Grounded", true);
-            if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space))
+            if (!animator.GetBool("Grounded"))
             {
-                animator.SetTrigger("Jump");
-                velocity.y = 3f;
-                animator.SetBool("Grounded", false);
+                animator.SetBool("Grounded", true);
+                particles.transform.position = transform.position;
+                particles.Emit(5);
+                //for (int i = 0; i < 5; i++)
+                //{
+                //    particles.Emit(transform.position, Vector3.up, 0.3f, 2f, Color.white);
+                //}
             }
+        }
+
+        if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space)) && animator.GetBool("Grounded"))
+        {
+            animator.SetTrigger("Jump");
+            velocity.y = 3f;
+            animator.SetBool("Grounded", false);
         }
 
         animator.SetFloat("AirSpeedY", velocity.y);
