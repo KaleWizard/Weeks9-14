@@ -23,13 +23,14 @@ public class RewindAbility : MonoBehaviour
         Deactivate();
     }
 
-    // Called upon ability action used
+    // Called upon ability selected
     public void Activate()
     {
         trail.gameObject.SetActive(true);
         trailUpdate = StartCoroutine(UpdateTrail());
     }
 
+    // Called upon ability action used
     public void Use()
     {
         transform.position = playerEcho.position;
@@ -37,11 +38,13 @@ public class RewindAbility : MonoBehaviour
         Deactivate();
     }
 
+    // Called on cooldown finished
     public void Refresh()
     {
         Activate();
     }
 
+    // Called when ability deselected
     public void Deactivate()
     {
         if (trailUpdate != null)
