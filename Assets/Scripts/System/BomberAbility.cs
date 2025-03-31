@@ -4,15 +4,30 @@ using UnityEngine;
 
 public class BomberAbility : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    AbilityCooldown cooldown;
+
+    public void Initialize(AbilityCooldown c)
+    {
+        cooldown = c;
+    }
+
+    public void Activate()
+    {
+
+    }
+
+    public void Use()
     {
         
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Refresh()
     {
-        
+
+    }
+
+    public void Deactivate()
+    {
+
     }
 }
