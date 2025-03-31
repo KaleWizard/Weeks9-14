@@ -1516,7 +1516,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61647253df91cab43be107f2afaf494c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  abilityDropdown: {fileID: 0}
+  abilityDropdown: {fileID: 69714973}
   OnAbilityUsed:
     m_PersistentCalls:
       m_Calls: []
