@@ -18,7 +18,7 @@ public class BomberAbility : MonoBehaviour
 
     public void Use()
     {
-        
+
     }
 
     public void Refresh()

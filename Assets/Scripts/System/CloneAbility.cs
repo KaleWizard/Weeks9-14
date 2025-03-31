@@ -18,7 +18,7 @@ public class CloneAbility : MonoBehaviour
 
     public void Use()
     {
-        
+
     }
 
     public void Refresh()

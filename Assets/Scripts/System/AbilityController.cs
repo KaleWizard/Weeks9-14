@@ -1,10 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using TMPro.EditorUtilities;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UI;
 
 public class AbilityController : MonoBehaviour
 {
@@ -44,6 +43,7 @@ public class AbilityController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
+            if (cooldown.IsActive()) return;
             OnAbilityUsed.Invoke();
         }
     }

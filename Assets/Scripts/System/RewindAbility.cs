@@ -18,7 +18,7 @@ public class RewindAbility : MonoBehaviour
 
     public void Use()
     {
-        
+
     }
 
     public void Refresh()

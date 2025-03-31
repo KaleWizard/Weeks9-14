@@ -40,4 +40,9 @@ public class AbilityCooldown : MonoBehaviour
         OnCooldownFinished.Invoke();
         currentTimer = null;
     }
+
+    public bool IsActive()
+    {
+        return currentTimer != null;
+    }
 }
