@@ -26,6 +26,7 @@ public class AbilityCooldown : MonoBehaviour
         if (currentTimer == null) return;
 
         StopCoroutine(currentTimer);
+        cooldownUI.fillAmount = 1f;
     }
 
     IEnumerator TimerRoutine(float seconds)
