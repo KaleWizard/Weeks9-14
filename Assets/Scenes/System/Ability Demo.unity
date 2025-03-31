@@ -1464,6 +1464,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8abb53ced3439240add1c16b8a8cd72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bombPrefab: {fileID: 1256091165103578528, guid: ef180d0121bff5942a525b26bd8fadff, type: 3}
+  indicatorPrefab: {fileID: 3757191402584725273, guid: da113aec2ffae384d841a9e0e9496f11, type: 3}
 --- !u!114 &1390401436
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4235,7 +4237,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!120 &1988161713
 LineRenderer:
   serializedVersion: 2
