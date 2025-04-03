@@ -57,18 +57,30 @@ public class BomberAbility : MonoBehaviour
     // Called when ability deselected
     public void Deactivate()
     {
+        // For each potentially active game object, destroy it if it's in the scene
         if (bomb != null)
+        {
             Destroy(bomb);
+            bomb = null;
+        }
         if (indicator != null)
+        {
             Destroy(indicator.gameObject);
+            indicator = null;
+        }
+        // If the indicator is updating its direction, stop the coroutine
         if (indicatorUpdate != null)
+        {
             StopCoroutine(indicatorUpdate);
+        }
     }
 
     void ThrowBomb()
     {
+        // End indicator appearance and updates
         StopCoroutine(indicatorUpdate);
         Destroy(indicator.gameObject);
+        // Tell bomb to throw itself in the player's movement direction
         bomb.Throw(direction.normalized);
     }
 
@@ -76,21 +88,27 @@ public class BomberAbility : MonoBehaviour
     {
         while (true)
         {
+            // If player's velocity is somewhat significant, point indicator in the velocity's direction
             if (movementScript.velocity.SqrMagnitude() > 0.05f)
             {
                 direction = movementScript.velocity;
+                indicator.up = direction;
             }
-            indicator.up = direction;
+            // Update bomb's position to player's position
             bomb.transform.position = transform.position;
+
             yield return null;
         }
     }
 
     void SpawnBomb()
     {
+        // Spawn a bomb
         bomb = Instantiate(bombPrefab, transform.position, Quaternion.identity);
         bomb.physics = movementScript;
+        // Spawn a throw direction indicator
         indicator = Instantiate(indicatorPrefab, transform);
+        // Start indicator's update coroutine
         indicatorUpdate = StartCoroutine(UpdateIndicator());
     }
 }

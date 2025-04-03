@@ -8,13 +8,14 @@ public class CloneAbility : MonoBehaviour
     float cooldownLength = 4f;
 
     public CloneMovement clonePrefab;
+    CloneMovement clone;
+
+    float cloneLifeLength = 4f;
 
     public PlayerMovement movementBase;
 
-    CloneMovement clone;
-    float cloneLifeLength = 4f;
-
-    Coroutine cloneDeathTimer = null;
+    // Coroutine is active during the lifetime of a clone
+    Coroutine cloneLifeTimer = null;
 
     // Called on scene load
     public void Initialize(AbilityCooldown c)
@@ -33,7 +34,8 @@ public class CloneAbility : MonoBehaviour
     {
         clone = Instantiate(clonePrefab, transform.position, Quaternion.identity);
         clone.Initialize(movementBase);
-        cloneDeathTimer = StartCoroutine(CloneLifetime());
+        // Begin waiting for clone's lifetime to end
+        cloneLifeTimer = StartCoroutine(CloneLifeTimer());
     }
 
     // Called on cooldown finished
@@ -45,22 +47,25 @@ public class CloneAbility : MonoBehaviour
     // Called when ability deselected
     public void Deactivate()
     {
+        // If clone is active, destroy it
         if (clone != null)
         {
             Destroy(clone.gameObject);
         }
-        if (cloneDeathTimer != null)
+        // If clone's life timer is active, stop it
+        if (cloneLifeTimer != null)
         {
-            StopCoroutine(cloneDeathTimer);
-            cloneDeathTimer = null;
+            StopCoroutine(cloneLifeTimer);
+            cloneLifeTimer = null;
         }
     }
 
-    IEnumerator CloneLifetime()
+    IEnumerator CloneLifeTimer()
     {
+        // After clone's lifetime has passed, destroy it and start the cooldown timer
         yield return new WaitForSeconds(cloneLifeLength);
         Destroy(clone.gameObject);
         cooldown.StartTimer(cooldownLength);
-        cloneDeathTimer = null;
+        cloneLifeTimer = null;
     }
 }

@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -47,26 +46,31 @@ public class AbilityController : MonoBehaviour
 
     void Update()
     {
-        // If Ability action is pressed
-        if (Input.GetKeyDown(KeyCode.R))
+        // If Ability action is pressed and no cooldown is active
+        if (Input.GetKeyDown(KeyCode.R) && !cooldown.IsActive())
         {
-            // Stop if the
-            if (cooldown.IsActive()) return;
             OnAbilityUsed.Invoke();
         }
     }
 
     public void UpdateAbility(int value)
     {
+        // End the cooldown timer
         cooldown.EndTimer();
 
+        // Remove listeners from Ability Used and Cooldown Finished events
         OnAbilityUsed.RemoveAllListeners();
         cooldown.OnCooldownFinished.RemoveAllListeners();
 
+        // Deactivate all abilities
         rewind.Deactivate();
         clone.Deactivate();
         bomber.Deactivate();
 
+        // For the new value of the dropdown:
+        //  - Activate it
+        //  - Add its "Use" method to the Ability Used event
+        //  - Add its "Refresh" method to the cooldown timer's Cooldown Finished event
         switch(value)
         {
             case REWIND:
