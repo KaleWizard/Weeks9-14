@@ -18,8 +18,10 @@ public class PlayerTerrainCollision
         terrain = terrainGrid;
     }
 
+    // Checks if the player is on the floor
     public bool FloorCheck(Vector2 velocity)
     {
+        // If player is moving 
         if (velocity.y > 0) return false;
         Vector2 pos = player.position;
 
@@ -33,6 +35,7 @@ public class PlayerTerrainCollision
         return inFloor;
     }
 
+    // Determines whether the cell below the player's cell is terrain
     public bool AboveFloor(Vector2 velocity)
     {
         Vector2 pos = player.position;
@@ -42,6 +45,7 @@ public class PlayerTerrainCollision
         return leftTile != null || rightTile != null;
     }
 
+    // Checks if the player is against the ceiling
     public bool CeilingCheck(Vector2 velocity)
     {
         if (velocity.y < 0) return false;
@@ -54,6 +58,7 @@ public class PlayerTerrainCollision
         return inCeiling && (leftTile != null || rightTile != null);
     }
 
+    // Checks if the player is against a wall to their left
     public bool WallCheckLeft(Vector2 velocity)
     {
         if (velocity.x > 0) return false;
@@ -66,6 +71,7 @@ public class PlayerTerrainCollision
         return inWall && (topTile != null || bottomTile != null);
     }
 
+    // Checks if the player is against a wall to their right
     public bool WallCheckRight(Vector2 velocity)
     {
         if (velocity.x < 0) return false;
@@ -78,6 +84,7 @@ public class PlayerTerrainCollision
         return inWall && (topTile != null || bottomTile != null);
     }
 
+    // Checks if the cell at (point + modifier) is terrain
     TileBase TileAtPoint(Vector2 point, Vector3Int modifier)
     {
         return terrain.GetTile(terrain.WorldToCell(point) + modifier);

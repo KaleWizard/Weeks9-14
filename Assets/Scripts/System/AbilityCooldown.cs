@@ -31,6 +31,7 @@ public class AbilityCooldown : MonoBehaviour
         if (currentTimer == null) return;
         // Stop the timer
         StopCoroutine(currentTimer);
+        currentTimer = null;
         // Reset UI element to full
         cooldownUI.fillAmount = 1f;
     }
