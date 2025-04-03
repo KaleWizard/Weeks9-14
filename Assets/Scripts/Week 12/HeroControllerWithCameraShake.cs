@@ -17,7 +17,7 @@ public class HeroControllerWithCameraShake : MonoBehaviour
 
     public List<AudioClip> footsteps;
 
-    public AudioSource audio;
+    public AudioSource audioSource;
 
     public ParticleSystem particles;
 
@@ -78,7 +78,7 @@ public class HeroControllerWithCameraShake : MonoBehaviour
 
     public void PlayFootstep()
     {
-        audio.PlayOneShot(footsteps[Random.Range(0, footsteps.Count)]);
+        audioSource.PlayOneShot(footsteps[Random.Range(0, footsteps.Count)]);
         impulseSource.m_DefaultVelocity = Random.insideUnitCircle;
         impulseSource.GenerateImpulseWithForce(0.1f);
 
