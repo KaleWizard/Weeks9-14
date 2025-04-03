@@ -16,7 +16,7 @@ public class BombCollision : MonoBehaviour
 
     public void Throw(Vector2 vel)
     {
-        velocity = vel * initialSpeed;
+        velocity = vel * (initialSpeed + physics.velocity.magnitude);
         StartCoroutine(BombMovement());
     }
 
@@ -38,16 +38,16 @@ public class BombCollision : MonoBehaviour
         Vector3Int cellPos = physics.terrain.WorldToCell(transform.position);
 
         // Check top edge
-        if (!IsCellEmpty(cellPos, 0, 1) && (transform.position.y % 1) > 1 - bombRadius)
+        if (!IsCellEmpty(cellPos, 0, 1) && (transform.position.y + bombRadius > physics.terrain.CellToWorld(cellPos).y + 1f))
             return true;
         // Check bottom edge
-        if (!IsCellEmpty(cellPos, 0, -1) && (transform.position.y % 1) < bombRadius)
+        if (!IsCellEmpty(cellPos, 0, -1) && (transform.position.y - bombRadius < physics.terrain.CellToWorld(cellPos).y))
             return true;
         // Check left 
-        if (!IsCellEmpty(cellPos, -1, 0) && (transform.position.x % 1) < bombRadius)
+        if (!IsCellEmpty(cellPos, -1, 0) && (transform.position.x - bombRadius < physics.terrain.CellToWorld(cellPos).x))
             return true;
         // Check right edge
-        if (!IsCellEmpty(cellPos, 1, 0) && (transform.position.x % 1) > 1 - bombRadius)
+        if (!IsCellEmpty(cellPos, 1, 0) && (transform.position.x + bombRadius > physics.terrain.CellToWorld(cellPos).x + 1f))
             return true;
 
         // Get position of bomb's cell in the world
