@@ -9,17 +9,20 @@ public class PlayerTerrainCollision
     public float playerHeight = 0.4f;
 
     Transform player;
+    PlayerMovement playerMovement;
 
     Tilemap terrain;
 
     public PlayerTerrainCollision(Transform playerTransform, Tilemap terrainGrid)
     {
         player = playerTransform;
+        playerMovement = player.gameObject.GetComponent<PlayerMovement>();
         terrain = terrainGrid;
     }
 
     public bool FloorCheck()
     {
+        if (playerMovement.velocity.y > 0) return false;
         Vector2 pos = player.position;
 
         if (!AboveFloor())
@@ -43,6 +46,7 @@ public class PlayerTerrainCollision
 
     public bool CeilingCheck()
     {
+        if (playerMovement.velocity.y < 0) return false;
         Vector2 pos = player.position;
         TileBase leftTile = TileAtPoint(pos + Vector2.left * playerWidth, Vector3Int.up);
         TileBase rightTile = TileAtPoint(pos + Vector2.right * playerWidth, Vector3Int.up);
@@ -54,6 +58,7 @@ public class PlayerTerrainCollision
 
     public bool WallCheckLeft()
     {
+        if (playerMovement.velocity.x > 0) return false;
         Vector2 pos = player.position;
         TileBase topTile = TileAtPoint(pos + Vector2.up * playerHeight, Vector3Int.left);
         TileBase bottomTile = TileAtPoint(pos + Vector2.down * playerHeight, Vector3Int.left);
@@ -65,6 +70,7 @@ public class PlayerTerrainCollision
 
     public bool WallCheckRight()
     {
+        if (playerMovement.velocity.x < 0) return false;
         Vector2 pos = player.position;
         TileBase topTile = TileAtPoint(pos + Vector2.up * playerHeight, Vector3Int.right);
         TileBase bottomTile = TileAtPoint(pos + Vector2.down * playerHeight, Vector3Int.right);
