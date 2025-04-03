@@ -7,17 +7,21 @@ using UnityEngine.Events;
 
 public class AbilityController : MonoBehaviour
 {
+    // Ability value constants, corresponding to dropdown choices
     const int NONE = 0;
     const int REWIND = 1;
     const int CLONE = 2;
     const int BOMBER = 3;
 
+    // Ability Classes
     RewindAbility rewind;
     CloneAbility clone;
     BomberAbility bomber;
 
+    // Ability cooldown timer
     AbilityCooldown cooldown;
 
+    // Ability select dropdown
     public TMP_Dropdown abilityDropdown;
 
     public UnityEvent OnAbilityUsed;
@@ -27,22 +31,26 @@ public class AbilityController : MonoBehaviour
     {
         cooldown = GetComponent<AbilityCooldown>();
 
+        // Retrieve each ability class
         rewind = GetComponent<RewindAbility>();
         clone = GetComponent<CloneAbility>();
         bomber = GetComponent<BomberAbility>();
 
+        // Initialize each ability class
         rewind.Initialize(cooldown);
         clone.Initialize(cooldown);
         bomber.Initialize(cooldown);
 
+        // On dropdown's value changed, update the ability selection
         abilityDropdown.onValueChanged.AddListener(UpdateAbility);
     }
 
-    // Update is called once per frame
     void Update()
     {
+        // If Ability action is pressed
         if (Input.GetKeyDown(KeyCode.R))
         {
+            // Stop if the
             if (cooldown.IsActive()) return;
             OnAbilityUsed.Invoke();
         }

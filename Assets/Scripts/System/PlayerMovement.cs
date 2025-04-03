@@ -16,7 +16,7 @@ public class PlayerMovement : MonoBehaviour
 
     PlayerTerrainCollision collision;
 
-    bool isGrounded = false;
+    public bool isGrounded = false;
 
     // Start is called before the first frame update
     void Start()
@@ -30,7 +30,7 @@ public class PlayerMovement : MonoBehaviour
 
         Vector2 pos = transform.position;
 
-        if (!isGrounded && collision.FloorCheck())
+        if (!isGrounded && collision.FloorCheck(velocity))
         {
             velocity.y = 0f;
             pos.y = Mathf.Floor(pos.y) + collision.playerHeight;
@@ -39,24 +39,24 @@ public class PlayerMovement : MonoBehaviour
 
         if (isGrounded)
         {
-            isGrounded = collision.AboveFloor();
+            isGrounded = collision.AboveFloor(velocity);
             Jump();
         } else
         {
             velocity += gravity * Time.deltaTime;
         }
 
-        if (collision.CeilingCheck())
+        if (collision.CeilingCheck(velocity))
         {
             velocity.y = 0f;
             pos.y = Mathf.Ceil(pos.y) - collision.playerHeight * 1.05f;
         }
 
-        if (collision.WallCheckLeft())
+        if (collision.WallCheckLeft(velocity))
         {
             velocity.x = 0f;
             pos.x = Mathf.Floor(pos.x) + collision.playerWidth * 1.05f;
-        } else if (collision.WallCheckRight())
+        } else if (collision.WallCheckRight(velocity))
         {
             velocity.x = 0f;
             pos.x = Mathf.Ceil(pos.x) - collision.playerWidth * 1.05f;

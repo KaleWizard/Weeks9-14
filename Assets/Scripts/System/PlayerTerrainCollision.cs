@@ -9,23 +9,21 @@ public class PlayerTerrainCollision
     public float playerHeight = 0.4f;
 
     Transform player;
-    PlayerMovement playerMovement;
 
     Tilemap terrain;
 
     public PlayerTerrainCollision(Transform playerTransform, Tilemap terrainGrid)
     {
         player = playerTransform;
-        playerMovement = player.gameObject.GetComponent<PlayerMovement>();
         terrain = terrainGrid;
     }
 
-    public bool FloorCheck()
+    public bool FloorCheck(Vector2 velocity)
     {
-        if (playerMovement.velocity.y > 0) return false;
+        if (velocity.y > 0) return false;
         Vector2 pos = player.position;
 
-        if (!AboveFloor())
+        if (!AboveFloor(velocity))
         {
             return false;
         }
@@ -35,7 +33,7 @@ public class PlayerTerrainCollision
         return inFloor;
     }
 
-    public bool AboveFloor()
+    public bool AboveFloor(Vector2 velocity)
     {
         Vector2 pos = player.position;
         TileBase leftTile = TileAtPoint(pos + Vector2.left * playerWidth, Vector3Int.down);
@@ -44,9 +42,9 @@ public class PlayerTerrainCollision
         return leftTile != null || rightTile != null;
     }
 
-    public bool CeilingCheck()
+    public bool CeilingCheck(Vector2 velocity)
     {
-        if (playerMovement.velocity.y < 0) return false;
+        if (velocity.y < 0) return false;
         Vector2 pos = player.position;
         TileBase leftTile = TileAtPoint(pos + Vector2.left * playerWidth, Vector3Int.up);
         TileBase rightTile = TileAtPoint(pos + Vector2.right * playerWidth, Vector3Int.up);
@@ -56,9 +54,9 @@ public class PlayerTerrainCollision
         return inCeiling && (leftTile != null || rightTile != null);
     }
 
-    public bool WallCheckLeft()
+    public bool WallCheckLeft(Vector2 velocity)
     {
-        if (playerMovement.velocity.x > 0) return false;
+        if (velocity.x > 0) return false;
         Vector2 pos = player.position;
         TileBase topTile = TileAtPoint(pos + Vector2.up * playerHeight, Vector3Int.left);
         TileBase bottomTile = TileAtPoint(pos + Vector2.down * playerHeight, Vector3Int.left);
@@ -68,9 +66,9 @@ public class PlayerTerrainCollision
         return inWall && (topTile != null || bottomTile != null);
     }
 
-    public bool WallCheckRight()
+    public bool WallCheckRight(Vector2 velocity)
     {
-        if (playerMovement.velocity.x < 0) return false;
+        if (velocity.x < 0) return false;
         Vector2 pos = player.position;
         TileBase topTile = TileAtPoint(pos + Vector2.up * playerHeight, Vector3Int.right);
         TileBase bottomTile = TileAtPoint(pos + Vector2.down * playerHeight, Vector3Int.right);

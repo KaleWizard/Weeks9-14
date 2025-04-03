@@ -32,9 +32,7 @@ public class CloneAbility : MonoBehaviour
     public void Use()
     {
         clone = Instantiate(clonePrefab, transform.position, Quaternion.identity);
-        clone.movementBase = movementBase;
-        clone.terrain = movementBase.terrain;
-        clone.velocity = movementBase.velocity;
+        clone.Initialize(movementBase);
         cloneDeathTimer = StartCoroutine(CloneLifetime());
     }
 
